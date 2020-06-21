@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.mmetzner.vendor">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".admin.MapActivity"/>
+        <activity android:name=".admin.client.NewClientActivity" />
+        <activity android:name=".admin.product.NewProductActivity" />
+        <activity android:name=".admin.product.SelectTruckToNewOrder" />
+        <activity android:name=".admin.payment.NewPaymentActivity" />
+        <activity android:name=".admin.client.SelectClientActivity" />
+        <activity android:name=".admin.product.SelectProductActivity"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".helper.OrderActivity" />
+        <activity android:name=".helper.detail.DetailActivity" />
+        <activity android:name=".helper.route.StartRouteActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+    </application>
+
+</manifest>

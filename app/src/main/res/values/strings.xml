@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Vendor</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="new_order">Novo Pedido</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="enter">Entrar</string>
+    <string name="new_product">Cadastrar Produto</string>
+    <string name="insert">Cadastrar</string>
+    <string name="description">Descrição</string>
+    <string name="price">Preço</string>
+    <string name="complete_name">Nome Completo</string>
+    <string name="cpf_cnpj">CPF/CNPJ</string>
+    <string name="address">Endereço e Nº</string>
+    <string name="city">Cidade</string>
+    <string name="phone">Telefone</string>
+    <string name="new_client">Cadastrar Cliente</string>
+    <string name="new_payment">Cadastrar Forma Pgto</string>
+    <string name="search_client">Pesquisar Cliente</string>
+    <string name="name_or_phone">Nome ou Telefone</string>
+    <string name="next">Próximo</string>
+    <string name="products">Produtos</string>
+    <string name="send">Enviar</string>
+    <string name="client">Cliente</string>
+    <string name="route_of_day">Rota do Dia</string>
+    <string name="init_route">Iniciar rota</string>
+    <string name="load_sugestion">Sugestão de Carga</string>
+    <string name="init">Iniciar</string>
+    <string name="order_opened">Cobranças em aberto</string>
+    <string name="finalize">Finalizar</string>
+    <string name="payment_type">Forma de Pagamento</string>
+    <string name="details">Detalhes</string>
+</resources>

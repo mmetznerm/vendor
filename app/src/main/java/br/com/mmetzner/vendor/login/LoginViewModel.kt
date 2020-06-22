@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor
+package br.com.mmetzner.vendor.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

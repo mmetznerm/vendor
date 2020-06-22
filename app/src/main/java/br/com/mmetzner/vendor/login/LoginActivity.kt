@@ -1,10 +1,11 @@
-package br.com.mmetzner.vendor
+package br.com.mmetzner.vendor.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.MapActivity
 import br.com.mmetzner.vendor.helper.OrderActivity
 import br.com.mmetzner.vendor.model.User

@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor
+package br.com.mmetzner.vendor.utils
 
 import java.util.*
 

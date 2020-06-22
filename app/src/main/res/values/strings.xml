@@ -30,4 +30,6 @@
     <string name="finalize">Finalizar</string>
     <string name="payment_type">Forma de Pagamento</string>
     <string name="details">Detalhes</string>
+    <string name="error">Erro</string>
+    <string name="email_and_password_incorrect">Email ou Senha inválidos</string>
 </resources>

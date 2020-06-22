@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <Button
         android:id="@+id/btLogin"
@@ -53,6 +53,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
+            android:lines="1"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
             android:text="maycon.metzner@hotmail.com"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,6 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
+            android:lines="1"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:text="141512"
             />
     </com.google.android.material.textfield.TextInputLayout>

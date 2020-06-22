@@ -8,9 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.mmetzner.vendor.Date
+import br.com.mmetzner.vendor.utils.Date
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.client.NewClientActivity
 import br.com.mmetzner.vendor.helper.detail.DetailActivity
@@ -20,8 +19,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_orders.*
 import kotlinx.android.synthetic.main.activity_orders.rvRecyclerView
-import kotlinx.android.synthetic.main.activity_select_product.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 

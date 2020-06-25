@@ -1,7 +1,7 @@
 package br.com.mmetzner.vendor.model
 
 class User {
-    val id: String? = null
+    var id: String? = null
     val email: String? = null
     val password: String? = null
     val truckId: String? = null

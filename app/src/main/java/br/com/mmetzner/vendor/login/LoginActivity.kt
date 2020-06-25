@@ -10,7 +10,7 @@ import br.com.mmetzner.vendor.admin.MapActivity
 import br.com.mmetzner.vendor.helper.OrderActivity
 import br.com.mmetzner.vendor.model.User
 import br.com.mmetzner.vendor.utils.Constants
-import br.com.mmetzner.vendor.utils.Dialog
+import br.com.mmetzner.vendor.utils.CustomDialog
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        createLoadingDialog()
         configureObservers()
         configureLoginButton()
     }
@@ -40,6 +41,9 @@ class LoginActivity : AppCompatActivity() {
         viewModel.userNotFound.observe(this, Observer {
             showUserNotFound()
         })
+        viewModel.loadingProgress.observe(this, Observer {
+            CustomDialog.loadingDialog(this, it)
+        })
     }
 
     private fun configureLoginButton() {
@@ -51,8 +55,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun createLoadingDialog() {
+
+    }
+
     private fun showError(errorMessage: String) {
-        Dialog.showError(this, errorMessage)
+        CustomDialog.showError(this, errorMessage)
     }
 
     private fun showUserNotFound() {

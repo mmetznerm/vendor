@@ -10,15 +10,23 @@ class LoginViewModel : ViewModel() {
 
     val adminTask: MutableLiveData<User> = MutableLiveData()
     val helperTask: MutableLiveData<User> = MutableLiveData()
+    val loadingProgress: MutableLiveData<Boolean> = MutableLiveData()
     val userNotFound: MutableLiveData<Boolean> = MutableLiveData()
     val error: MutableLiveData<String> = MutableLiveData()
 
     fun getUserByEmailAndPassword(email: String, password: String) {
+        loadingProgress.postValue(true)
         FirebaseData.getUserByEmailAndPassword(
             email = email,
             password = password,
-            successCallBack = { checkUserType(it) },
-            errorCallBack = { error.postValue(it) }
+            successCallBack = {
+                loadingProgress.postValue(false)
+                checkUserType(it)
+            },
+            errorCallBack = {
+                loadingProgress.postValue(false)
+                error.postValue(it)
+            }
         )
     }
 

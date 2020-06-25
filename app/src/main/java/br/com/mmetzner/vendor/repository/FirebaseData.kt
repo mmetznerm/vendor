@@ -1,15 +1,14 @@
 package br.com.mmetzner.vendor.repository
 
 import android.util.Log
-import br.com.mmetzner.vendor.model.Product
-import br.com.mmetzner.vendor.model.Truck
-import br.com.mmetzner.vendor.model.User
+import br.com.mmetzner.vendor.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 
 object FirebaseData {
     private const val DATABASE_USERS = "users"
     private const val DATABASE_TRUCKS = "trucks"
     private const val DATABASE_PRODUCTS = "products"
+    private const val DATABASE_CLIENTS = "clients"
 
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -72,6 +71,19 @@ object FirebaseData {
                 }
 
                 successCallBack.invoke(products)
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun saveClient(client: ClientRequest, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+        db.collection(DATABASE_CLIENTS)
+            .document()
+            .set(client)
+            .addOnSuccessListener {
+                successCallBack.invoke()
             }
             .addOnFailureListener { exception ->
                 errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")

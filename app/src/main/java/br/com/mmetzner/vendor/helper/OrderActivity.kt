@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.mmetzner.vendor.utils.Date
 import br.com.mmetzner.vendor.R
-import br.com.mmetzner.vendor.admin.client.NewClientActivity
+import br.com.mmetzner.vendor.admin.newclient.NewClientActivity
 import br.com.mmetzner.vendor.helper.detail.DetailActivity
 import br.com.mmetzner.vendor.helper.route.StartRouteActivity
 import br.com.mmetzner.vendor.model.*

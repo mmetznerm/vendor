@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor.admin
+package br.com.mmetzner.vendor.admin.map
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -6,11 +6,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import br.com.mmetzner.vendor.R
-import br.com.mmetzner.vendor.admin.MapActivity
+import br.com.mmetzner.vendor.admin.map.MapActivity
 import br.com.mmetzner.vendor.helper.OrderActivity
 import br.com.mmetzner.vendor.model.User
 import br.com.mmetzner.vendor.utils.Constants
 import br.com.mmetzner.vendor.utils.CustomDialog
+import br.com.mmetzner.vendor.utils.CustomDialog.loadingDialog
+import br.com.mmetzner.vendor.utils.CustomDialog.showError
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -23,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        createLoadingDialog()
         configureObservers()
         configureLoginButton()
     }
@@ -36,13 +37,13 @@ class LoginActivity : AppCompatActivity() {
             goToNextStep(it, OrderActivity::class.java)
         })
         viewModel.error.observe(this, Observer {
-            showError(it)
+            showError(this, it)
         })
         viewModel.userNotFound.observe(this, Observer {
             showUserNotFound()
         })
         viewModel.loadingProgress.observe(this, Observer {
-            CustomDialog.loadingDialog(this, it)
+            loadingDialog(this, it)
         })
     }
 
@@ -53,14 +54,6 @@ class LoginActivity : AppCompatActivity() {
 
             login(userName, userPassword)
         }
-    }
-
-    private fun createLoadingDialog() {
-
-    }
-
-    private fun showError(errorMessage: String) {
-        CustomDialog.showError(this, errorMessage)
     }
 
     private fun showUserNotFound() {

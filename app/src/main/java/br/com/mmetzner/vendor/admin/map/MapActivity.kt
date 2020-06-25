@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor.admin
+package br.com.mmetzner.vendor.admin.map
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +8,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import br.com.mmetzner.vendor.R
-import br.com.mmetzner.vendor.admin.client.NewClientActivity
+import br.com.mmetzner.vendor.admin.newclient.NewClientActivity
 import br.com.mmetzner.vendor.admin.client.SelectClientActivity
 import br.com.mmetzner.vendor.admin.payment.NewPaymentActivity
 import br.com.mmetzner.vendor.admin.product.NewProductActivity
 import br.com.mmetzner.vendor.model.Truck
 import br.com.mmetzner.vendor.utils.CustomDialog
+import br.com.mmetzner.vendor.utils.CustomDialog.loadingDialog
+import br.com.mmetzner.vendor.utils.CustomDialog.showError
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -48,7 +50,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
             showTruckDetailPopup(it.first, it.second)
         })
         viewModel.loadingProgress.observe(this, Observer {
-            CustomDialog.loadingDialog(this, it)
+            loadingDialog(this, it)
+        })
+        viewModel.error.observe(this, Observer {
+            showError(this, it)
         })
     }
 

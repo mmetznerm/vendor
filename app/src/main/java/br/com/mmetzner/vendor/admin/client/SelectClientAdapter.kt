@@ -7,7 +7,7 @@ import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.model.Client
 import kotlinx.android.synthetic.main.activity_orders_item.view.*
 
-class SelectClientAdapter(private var mItems: List<Client>, private val listener: OnClickListener) : RecyclerView.Adapter<SelectClientViewHolder>() {
+class SelectClientAdapter(private var mItems: List<Client?>, private val listener: OnClickListener) : RecyclerView.Adapter<SelectClientViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectClientViewHolder {
         return SelectClientViewHolder(
@@ -19,19 +19,19 @@ class SelectClientAdapter(private var mItems: List<Client>, private val listener
     override fun onBindViewHolder(holder: SelectClientViewHolder, position: Int) {
         val item = mItems[position]
 
-        holder.itemView.tvClient.text = item.name
+        holder.itemView.tvClient.text = item?.name
         holder.itemView.setOnClickListener { listener.onItemClicked(position, item) }
     }
 
     interface OnClickListener {
-        fun onItemClicked(position: Int, client: Client)
+        fun onItemClicked(position: Int, client: Client?)
     }
 
     override fun getItemCount(): Int {
         return mItems.size
     }
 
-    fun updateItems(items: List<Client>) {
+    fun updateItems(items: List<Client?>) {
         this.mItems = items
         notifyDataSetChanged()
     }

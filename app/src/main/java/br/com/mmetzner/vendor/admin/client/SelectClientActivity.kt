@@ -2,20 +2,20 @@ package br.com.mmetzner.vendor.admin.client
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.product.SelectProductActivity
 import br.com.mmetzner.vendor.model.Client
-import com.google.firebase.firestore.FirebaseFirestore
+import br.com.mmetzner.vendor.utils.CustomDialog
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_select_client.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SelectClientActivity : AppCompatActivity(), SelectClientAdapter.OnClickListener {
 
-    private lateinit var db: FirebaseFirestore
+    private val viewModel: SelectClientViewModel by viewModel()
     private val mAdapter by lazy { SelectClientAdapter(arrayListOf(), this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,39 +24,31 @@ class SelectClientActivity : AppCompatActivity(), SelectClientAdapter.OnClickLis
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         title = getString(R.string.search_client)
 
-        db = FirebaseFirestore.getInstance()
+        configureList()
+        configureObservers()
 
+        viewModel.getClients()
+    }
+
+    private fun configureObservers() {
+        viewModel.loadingProgress.observe(this, Observer {
+            CustomDialog.loadingDialog(this, it)
+        })
+        viewModel.error.observe(this, Observer {
+            CustomDialog.showError(this, it)
+        })
+        viewModel.clients.observe(this, Observer {
+            mAdapter.updateItems(it)
+        })
+    }
+
+    private fun configureList() {
         val layoutManager = LinearLayoutManager(this)
         rvClients.layoutManager = layoutManager
         rvClients.adapter = mAdapter
-
-        getClients()
     }
 
-    private fun getClients() {
-        db
-            .collection("clients")
-            .get()
-            .addOnSuccessListener { result ->
-                val clients = mutableListOf<Client>()
-
-                val documents = result.documents
-                for(document in documents) {
-                    val id = document.id
-                    val client = document.toObject(Client::class.java)!!
-                    client.id = id
-                    clients.add(client)
-
-                    mAdapter.updateItems(clients)
-                }
-
-            }
-            .addOnFailureListener { exception ->
-                Log.d("VENDOR", "Error getting documents: ", exception)
-            }
-    }
-
-    override fun onItemClicked(position: Int, client: Client) {
+    override fun onItemClicked(position: Int, client: Client?) {
         val intent = Intent(this, SelectProductActivity::class.java)
         intent.putExtra("client", Gson().toJson(client))
         startActivity(intent)

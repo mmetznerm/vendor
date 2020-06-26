@@ -60,7 +60,7 @@ object FirebaseData {
             }
     }
 
-    fun getAllProducts(successCallBack: (users: List<Product?>) -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun getAllProducts(successCallBack: (products: List<Product?>) -> Unit, errorCallBack: (error: String) -> Unit) {
         db.collection(DATABASE_PRODUCTS)
             .get()
             .addOnSuccessListener { result ->
@@ -72,6 +72,25 @@ object FirebaseData {
                 }
 
                 successCallBack.invoke(products)
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun getAllClients(successCallBack: (users: List<Client?>) -> Unit, errorCallBack: (error: String) -> Unit) {
+        db.collection(DATABASE_CLIENTS)
+            .get()
+            .addOnSuccessListener { result ->
+                val clients = mutableListOf<Client?>()
+                result.documents.forEach {
+                    val client = it.toObject(Client::class.java)
+                    client?.id = it.id
+                    clients.add(client)
+                }
+
+                successCallBack.invoke(clients)
             }
             .addOnFailureListener { exception ->
                 errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")

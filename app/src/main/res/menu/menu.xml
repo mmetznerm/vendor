@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuNewProduct"
-        android:title="Cadastrar Produto"/>
-    <item android:id="@+id/menuNewPayment"
-        android:title="Cadastrar Forma Pgto" />
     <item android:id="@+id/menuNewClient"
-        android:title="Cadastrar Cliente" />
+        android:title="@string/new_client" />
+    <item android:id="@+id/menuNewProduct"
+        android:title="@string/new_product"/>
+    <item android:id="@+id/menuNewPayment"
+        android:title="@string/new_payment" />
 </menu>

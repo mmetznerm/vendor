@@ -10,10 +10,9 @@ import androidx.lifecycle.Observer
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.newclient.NewClientActivity
 import br.com.mmetzner.vendor.admin.client.SelectClientActivity
-import br.com.mmetzner.vendor.admin.payment.NewPaymentActivity
-import br.com.mmetzner.vendor.admin.product.NewProductActivity
+import br.com.mmetzner.vendor.admin.newpayment.NewPaymentActivity
+import br.com.mmetzner.vendor.admin.newproduct.NewProductActivity
 import br.com.mmetzner.vendor.model.Truck
-import br.com.mmetzner.vendor.utils.CustomDialog
 import br.com.mmetzner.vendor.utils.CustomDialog.loadingDialog
 import br.com.mmetzner.vendor.utils.CustomDialog.showError
 import com.google.android.gms.maps.CameraUpdateFactory

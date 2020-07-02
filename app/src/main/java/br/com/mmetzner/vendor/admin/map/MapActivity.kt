@@ -9,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.newclient.NewClientActivity
-import br.com.mmetzner.vendor.admin.client.SelectClientActivity
+import br.com.mmetzner.vendor.admin.neworder.client.SelectClientActivity
 import br.com.mmetzner.vendor.admin.newpayment.NewPaymentActivity
 import br.com.mmetzner.vendor.admin.newproduct.NewProductActivity
 import br.com.mmetzner.vendor.model.Truck
+import br.com.mmetzner.vendor.utils.Constants
 import br.com.mmetzner.vendor.utils.CustomDialog.loadingDialog
 import br.com.mmetzner.vendor.utils.CustomDialog.showError
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,6 +23,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_map.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -38,7 +40,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         configureButtons()
         configureObservers()
 
-        viewModel.getEnableTrucks()
+        viewModel.getAllProducts()
     }
 
     private fun configureObservers() {
@@ -53,6 +55,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         })
         viewModel.error.observe(this, Observer {
             showError(this, it)
+        })
+        viewModel.products.observe(this, Observer {
+            viewModel.getEnableTrucks()
         })
     }
 
@@ -73,7 +78,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun openClientActivity() {
-        startActivity(Intent(this, SelectClientActivity::class.java))
+        val gson = Gson()
+        val intent = Intent(this, SelectClientActivity::class.java)
+        intent.putExtra(Constants.TRUCKS, gson.toJson(viewModel.trucks.value))
+        intent.putExtra(Constants.PRODUCTS, gson.toJson(viewModel.products.value))
+        startActivity(intent)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

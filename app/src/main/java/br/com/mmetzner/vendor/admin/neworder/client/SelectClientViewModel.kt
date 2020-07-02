@@ -1,9 +1,8 @@
-package br.com.mmetzner.vendor.admin.client
+package br.com.mmetzner.vendor.admin.neworder.client
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.mmetzner.vendor.model.Client
-import br.com.mmetzner.vendor.model.ProductRequest
 import br.com.mmetzner.vendor.repository.FirebaseData
 
 class SelectClientViewModel : ViewModel() {

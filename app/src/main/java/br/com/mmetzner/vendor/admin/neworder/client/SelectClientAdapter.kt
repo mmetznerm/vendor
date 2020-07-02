@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor.admin.client
+package br.com.mmetzner.vendor.admin.neworder.client
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.model.Client
 import kotlinx.android.synthetic.main.activity_orders_item.view.*
+import kotlinx.android.synthetic.main.activity_orders_item.view.tvClient
+import kotlinx.android.synthetic.main.activity_select_client_item.view.*
 
 class SelectClientAdapter(private var mItems: List<Client?>, private val listener: OnClickListener) : RecyclerView.Adapter<SelectClientViewHolder>() {
 
@@ -20,6 +22,8 @@ class SelectClientAdapter(private var mItems: List<Client?>, private val listene
         val item = mItems[position]
 
         holder.itemView.tvClient.text = item?.name
+        holder.itemView.tvAddress.text = item?.address
+        holder.itemView.tvPhone.text = item?.phone
         holder.itemView.setOnClickListener { listener.onItemClicked(position, item) }
     }
 

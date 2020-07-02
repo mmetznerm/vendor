@@ -10,6 +10,7 @@ object FirebaseData {
     private const val DATABASE_PRODUCTS = "products"
     private const val DATABASE_PAYMENTS = "payments"
     private const val DATABASE_CLIENTS = "clients"
+    private const val DATABASE_ORDERS = "orders"
 
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
@@ -128,6 +129,19 @@ object FirebaseData {
         db.collection(DATABASE_PAYMENTS)
             .document()
             .set(paymentRequest)
+            .addOnSuccessListener {
+                successCallBack.invoke()
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun saveOrder(orderRequest: OrderRequest, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+        db.collection(DATABASE_ORDERS)
+            .document()
+            .set(orderRequest)
             .addOnSuccessListener {
                 successCallBack.invoke()
             }

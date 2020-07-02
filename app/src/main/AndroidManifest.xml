@@ -28,8 +28,8 @@
         <activity android:name=".admin.newproduct.NewProductActivity" />
         <activity android:name=".admin.product.SelectTruckToNewOrder" />
         <activity android:name=".admin.newpayment.NewPaymentActivity" />
-        <activity android:name=".admin.client.SelectClientActivity" />
-        <activity android:name=".admin.product.SelectProductActivity"
+        <activity android:name="br.com.mmetzner.vendor.admin.neworder.client.SelectClientActivity" />
+        <activity android:name=".admin.neworder.product.SelectProductActivity"
             android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".helper.OrderActivity" />
         <activity android:name=".helper.detail.DetailActivity" />

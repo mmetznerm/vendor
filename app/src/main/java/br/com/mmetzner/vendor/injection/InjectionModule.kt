@@ -1,8 +1,9 @@
 package br.com.mmetzner.vendor.injection
 
-import br.com.mmetzner.vendor.admin.client.SelectClientViewModel
+import br.com.mmetzner.vendor.admin.neworder.client.SelectClientViewModel
 import br.com.mmetzner.vendor.admin.map.MapViewModel
 import br.com.mmetzner.vendor.admin.newclient.NewClientViewModel
+import br.com.mmetzner.vendor.admin.neworder.product.SelectProductViewModel
 import br.com.mmetzner.vendor.admin.newpayment.NewPaymentViewModel
 import br.com.mmetzner.vendor.admin.newproduct.NewProductViewModel
 import br.com.mmetzner.vendor.login.LoginViewModel
@@ -16,4 +17,5 @@ val injectionModule = module {
     viewModel { NewProductViewModel() }
     viewModel { NewPaymentViewModel() }
     viewModel { SelectClientViewModel() }
+    viewModel { SelectProductViewModel() }
 }

@@ -9,6 +9,7 @@ import br.com.mmetzner.vendor.repository.FirebaseData
 class MapViewModel : ViewModel() {
 
     val trucks: MutableLiveData<List<Truck?>> = MutableLiveData()
+    val products: MutableLiveData<List<Product?>> = MutableLiveData()
     val truckDetailPopup: MutableLiveData<Pair<String?, String>> = MutableLiveData()
     val loadingProgress: MutableLiveData<Boolean> = MutableLiveData()
     val error: MutableLiveData<String> = MutableLiveData()
@@ -26,23 +27,12 @@ class MapViewModel : ViewModel() {
 
     fun getProductsDetailByTruck(licensePlate: String?) {
         val truck = filterTruckByLicensePlate(licensePlate)
-
-        loadingProgress.postValue(true)
-        FirebaseData.getAllProducts(
-            successCallBack = {
-                loadingProgress.postValue(false)
-                setProductsName(it, truck)
-            },
-            errorCallBack = {
-                loadingProgress.postValue(false)
-                error.postValue(it)
-            }
-        )
+        setProductsName(truck)
     }
 
-    private fun setProductsName(products: List<Product?>, truck: Truck?) {
+    private fun setProductsName(truck: Truck?) {
         truck?.products?.forEach { truckProduct ->
-            val product = products.first { it?.id == truckProduct.productId }
+            val product = products.value?.first { it?.id == truckProduct.productId }
             truckProduct.productDescription = product?.description
         }
 
@@ -52,6 +42,20 @@ class MapViewModel : ViewModel() {
         }
 
         truckDetailPopup.postValue(Pair(truck?.licensePlate, message.toString()))
+    }
+
+    fun getAllProducts() {
+        loadingProgress.postValue(true)
+        FirebaseData.getAllProducts(
+            successCallBack = {
+                loadingProgress.postValue(false)
+                products.postValue(it)
+            },
+            errorCallBack = {
+                loadingProgress.postValue(false)
+                error.postValue(it)
+            }
+        )
     }
 
 }

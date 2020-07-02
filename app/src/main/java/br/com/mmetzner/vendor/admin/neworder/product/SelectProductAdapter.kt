@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor.admin.product
+package br.com.mmetzner.vendor.admin.neworder.product
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mmetzner.vendor.R
-import br.com.mmetzner.vendor.model.Client
 import br.com.mmetzner.vendor.model.Product
-import kotlinx.android.synthetic.main.activity_orders_item.view.*
 import kotlinx.android.synthetic.main.activity_select_product_item.view.*
 
 class SelectProductAdapter(private var mItems: List<Product>) : RecyclerView.Adapter<SelectProductViewHolder>() {

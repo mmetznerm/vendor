@@ -9,7 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.mmetzner.vendor.utils.Date
+import br.com.mmetzner.vendor.utils.CustomDate
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.newclient.NewClientActivity
 import br.com.mmetzner.vendor.helper.detail.DetailActivity
@@ -68,7 +68,7 @@ class OrderActivity : AppCompatActivity(), OrderAdapter.OnClickListener {
     }
 
     private fun openCalendar() {
-        val myCalendar = Date.currentDate
+        val myCalendar = CustomDate.currentDate
         DatePickerDialog(
             this@OrderActivity,
             DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -76,7 +76,7 @@ class OrderActivity : AppCompatActivity(), OrderAdapter.OnClickListener {
                 myCalendar.set(Calendar.MONTH, month)
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                Date.currentDate = myCalendar
+                CustomDate.currentDate = myCalendar
                 getOrdersList()
             }, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -176,7 +176,7 @@ class OrderActivity : AppCompatActivity(), OrderAdapter.OnClickListener {
     }
 
     private fun getOrdersList() {
-        val date = convertDate(Date.currentDate)
+        val date = convertDate(CustomDate.currentDate)
         db.collection("orders")
             .whereEqualTo("date", date)
             .whereEqualTo("truckId", mUser.truckId)

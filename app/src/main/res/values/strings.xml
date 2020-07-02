@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Vendor</string>
-    <string name="title_activity_map">MapActivity</string>
     <string name="new_order">Novo Pedido</string>
     <string name="email">Email</string>
     <string name="password">Senha</string>
@@ -32,6 +31,12 @@
     <string name="details">Detalhes</string>
     <string name="error">Erro</string>
     <string name="email_and_password_incorrect">Email ou Senha inválidos</string>
-    <string name="loading">Carregando...</string>
+    <string name="loading">Carregando…</string>
     <string name="days">Prazo</string>
+    <string name="insert_products">Inserir Produtos</string>
+    <string name="attention">Atenção</string>
+    <string name="message_before_send_order">Deseja entregar o pedido a um caminhao especifico ou que o sistema calcule o mais próximo?</string>
+    <string name="truck">Caminhão</string>
+    <string name="calculate">Calcular</string>
+    <string name="message_truck_delivered">Enviado para o veículo: %1$s</string>
 </resources>

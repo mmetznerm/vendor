@@ -26,7 +26,7 @@
         <activity android:name=".admin.map.MapActivity"/>
         <activity android:name=".admin.newclient.NewClientActivity" />
         <activity android:name=".admin.newproduct.NewProductActivity" />
-        <activity android:name=".admin.product.SelectTruckToNewOrder" />
+        <activity android:name=".admin.neworder.truck.SelectTruckDialog" />
         <activity android:name=".admin.newpayment.NewPaymentActivity" />
         <activity android:name="br.com.mmetzner.vendor.admin.neworder.client.SelectClientActivity" />
         <activity android:name=".admin.neworder.product.SelectProductActivity"

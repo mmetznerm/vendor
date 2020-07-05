@@ -1,15 +1,19 @@
 package br.com.mmetzner.vendor.admin.neworder.product
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.mmetzner.vendor.R
-import br.com.mmetzner.vendor.admin.product.SelectTruckToNewOrder
+import br.com.mmetzner.vendor.admin.neworder.truck.SelectTruckDialog
 import br.com.mmetzner.vendor.model.Client
 import br.com.mmetzner.vendor.model.Product
 import br.com.mmetzner.vendor.model.Truck
@@ -111,9 +115,20 @@ class SelectProductActivity : AppCompatActivity() {
     }
 
     private fun switchTruckBeforeSendOrder() {
-        val intent = Intent(this, SelectTruckToNewOrder::class.java)
-        intent.putExtra(Constants.TRUCKS, Gson().toJson(mTrucks))
-        startActivityForResult(intent, 100)
+        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+        val prev: Fragment? = supportFragmentManager.findFragmentByTag("dialog")
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+
+        val newFragment = SelectTruckDialog.newInstance(Gson().toJson(mTrucks))
+        newFragment.setOnClickListener(object : SelectTruckDialog.ClickListener {
+            override fun onItemClickListener(truck: Truck) {
+                viewModel.mTruckSelected.postValue(truck)
+            }
+        })
+        newFragment.show(ft, "dialog")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

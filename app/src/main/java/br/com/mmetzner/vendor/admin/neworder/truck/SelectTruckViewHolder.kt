@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor.admin.product
+package br.com.mmetzner.vendor.admin.neworder.truck
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

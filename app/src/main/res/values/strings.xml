@@ -40,4 +40,5 @@
     <string name="calculate">Calcular</string>
     <string name="message_truck_delivered">Enviado para o veículo: %1$s</string>
     <string name="select_vehicle">Escolher Veículo</string>
+    <string name="close_route">Encerrar Rota</string>
 </resources>

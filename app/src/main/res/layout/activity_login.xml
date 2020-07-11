@@ -56,7 +56,7 @@
             android:lines="1"
             android:inputType="textEmailAddress"
             android:imeOptions="actionNext"
-            android:text="maycon.metzner@hotmail.com"/>
+            android:text="aline.ski@hotmail.com"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

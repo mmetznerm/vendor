@@ -7,5 +7,5 @@ class Order(
     val finished: Boolean = false
 ) {
     var client: Client? = null
-    var productList: List<Product>? = null
+    var productList: List<Product?>? = null
 }

@@ -31,7 +31,7 @@
         <activity android:name="br.com.mmetzner.vendor.admin.neworder.client.SelectClientActivity" />
         <activity android:name=".admin.neworder.product.SelectProductActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".helper.OrderActivity" />
+        <activity android:name=".helper.order.OrderActivity" />
         <activity android:name=".helper.detail.DetailActivity" />
         <activity android:name=".helper.route.StartRouteActivity" />
 

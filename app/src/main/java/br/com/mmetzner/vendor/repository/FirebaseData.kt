@@ -150,4 +150,58 @@ object FirebaseData {
                 Log.d("Vendor", "Error", exception)
             }
     }
+
+    fun updateTruck(truckId: String, updates: HashMap<String, Any>, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+        db.collection(DATABASE_TRUCKS)
+            .document(truckId)
+            .update(updates)
+            .addOnSuccessListener {
+                successCallBack.invoke()
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun getOrderByDay(date: String, truckId: String, successCallBack: (orders: List<Order?>) -> Unit, errorCallBack: (error: String) -> Unit) {
+        db.collection(DATABASE_ORDERS)
+            .whereEqualTo("date", date)
+            .whereEqualTo("truckId", truckId)
+            .get()
+            .addOnSuccessListener { result ->
+                val orders = mutableListOf<Order?>()
+                result.documents.forEach {
+                    val order = it.toObject(Order::class.java)
+                    order?.id = it.id
+                    orders.add(order)
+                }
+
+                successCallBack.invoke(orders)
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun getTruckById(truckId: String, successCallBack: (truck: Truck?) -> Unit, errorCallBack: (error: String) -> Unit) {
+        db.collection(DATABASE_TRUCKS)
+            .document(truckId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val id = document.id
+                    val truck = document.toObject(Truck::class.java)!!
+                    truck.id = id
+                    successCallBack.invoke(truck)
+                } else {
+                    errorCallBack.invoke("Truck not found")
+                }
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                Log.d("Vendor", "Error", exception)
+            }
+    }
 }

@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.map.MapActivity
-import br.com.mmetzner.vendor.helper.OrderActivity
+import br.com.mmetzner.vendor.helper.order.OrderActivity
 import br.com.mmetzner.vendor.model.User
 import br.com.mmetzner.vendor.utils.Constants
-import br.com.mmetzner.vendor.utils.CustomDialog
 import br.com.mmetzner.vendor.utils.CustomDialog.loadingDialog
 import br.com.mmetzner.vendor.utils.CustomDialog.showError
 import com.google.gson.Gson

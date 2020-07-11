@@ -153,7 +153,7 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnClickListener {
     }
 
     private fun calculateTotalProducts(): Double? {
-        return mOrder.productList?.map { it.quantity * it.price }?.sum()
+        return mOrder.productList?.map { it!!.quantity * it.price }?.sum()
     }
 
     private fun calculateTotalCharges(): Double {

@@ -32,7 +32,7 @@ class MapViewModel : ViewModel() {
 
     private fun setProductsName(truck: Truck?) {
         truck?.products?.forEach { truckProduct ->
-            val product = products.value?.first { it?.id == truckProduct.productId }
+            val product = products.value?.firstOrNull { it?.id == truckProduct.productId }
             truckProduct.productDescription = product?.description
         }
 

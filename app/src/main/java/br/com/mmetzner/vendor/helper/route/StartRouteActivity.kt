@@ -9,42 +9,77 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.model.Product
-import br.com.mmetzner.vendor.model.ProductItemRequest
+import br.com.mmetzner.vendor.utils.Constants
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_select_product.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class StartRouteActivity : AppCompatActivity() {
 
-    private var currentLatitude: Double = 0.0
-    private var currentLongitude: Double = 0.0
-    private val PERMISSION_ID: Int = 345
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
-    private lateinit var db: FirebaseFirestore
+    private val viewModel: StartRouteViewModel by viewModel()
     private val mAdapter by lazy { StartRouteAdapter(arrayListOf()) }
-    private val mTruckId by lazy { intent.getStringExtra("truckId") }
-    private val mSugestedQuantities by lazy { Gson().fromJson<List<Product>>(intent.getStringExtra("sugestedQuantities"), object : TypeToken<List<Product>>() {}.type) }
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_route)
         title = getString(R.string.load_sugestion)
 
-        db = FirebaseFirestore.getInstance()
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        setTruckId()
+        setProducts()
 
+        mountSuggestedList()
+
+        configureList()
+        configureObservers()
+        configureButtons()
+        configureLocationService()
+    }
+
+    private fun setProducts() {
+        viewModel.mProducts.value = Gson().fromJson<List<Product>>(intent.getStringExtra(Constants.PRODUCTS), object : TypeToken<List<Product>>() {}.type)
+    }
+
+    private fun mountSuggestedList() {
+        val suggestedQuantities = Gson().fromJson<List<Product>>(intent.getStringExtra(Constants.SUGGESTED_QUANTITIES), object : TypeToken<List<Product>>() {}.type)
+        viewModel.mountSuggestedList(suggestedQuantities)
+    }
+
+    private fun setTruckId() {
+        viewModel.mTruckId.value = intent.getStringExtra(Constants.TRUCK_ID)
+    }
+
+    private fun configureLocationService() {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+    }
+
+    private fun configureButtons() {
+        btFinalize.setOnClickListener { getLastLocation() }
+    }
+
+    private fun configureObservers() {
+        viewModel.allRequestsReady.observe(this, Observer {
+            setResult(Constants.REQUEST_CODE_ROUTE_ACTIVITY)
+            finish()
+        })
+        viewModel.mSuggestedProducts.observe(this, Observer { product ->
+            mAdapter.updateItems(product.sortedBy { it?.description })
+        })
+    }
+
+    private fun configureList() {
         val layoutManager = LinearLayoutManager(this)
         rvRecyclerView.layoutManager = layoutManager
 
@@ -55,72 +90,10 @@ class StartRouteActivity : AppCompatActivity() {
                 DividerItemDecoration.VERTICAL
             )
         )
-
-        btFinalize.setOnClickListener { checkProducts() }
-
-        getLastLocation()
-        getProducts()
     }
 
-    private fun checkProducts() {
-        val products = mAdapter.getItems()
-            .map { ProductItemRequest(it.id, it.quantity) }
-
-        startRoute(mTruckId, products)
-    }
-
-    private fun startRoute(
-        truckId: String,
-        products: List<ProductItemRequest>
-    ) {
-        val updates = hashMapOf(
-            "routeStarted" to true,
-            "products" to products,
-            "latitude" to this.currentLatitude,
-            "longitude" to this.currentLongitude
-        )
-
-        db
-            .collection("trucks")
-            .document(truckId)
-            .update(updates)
-            .addOnSuccessListener {
-                setResult(188)
-                finish()
-
-            }
-            .addOnFailureListener { exception ->
-                Log.d("VENDOR", "Error getting documents: ", exception)
-            }
-
-    }
-
-    private fun getProducts() {
-        db
-            .collection("products")
-            .get()
-            .addOnSuccessListener { result ->
-                val products = mutableListOf<Product>()
-
-                val documents = result.documents
-                for (document in documents) {
-                    val id = document.id
-                    val product = document.toObject(Product::class.java)!!
-                    product.id = id
-                    products.add(product)
-
-                }
-                mSugestedQuantities.forEach {
-                    val sugestedProduct = products.first { product -> product.description.equals(it.description) }
-                    sugestedProduct.quantity = it.quantity
-                }
-
-                mAdapter.updateItems(products.sortedBy { it.description })
-
-            }
-            .addOnFailureListener { exception ->
-                Log.d("VENDOR", "Error getting documents: ", exception)
-            }
+    private fun startRoute(latitude: Double, longitude: Double) {
+        viewModel.startRoute(mAdapter.getItems(), latitude, longitude)
     }
 
     private fun isLocationEnabled(): Boolean {
@@ -138,7 +111,7 @@ class StartRouteActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ),
-            PERMISSION_ID
+            Constants.REQUEST_CODE_PERMISSIONS
         )
     }
 
@@ -160,14 +133,13 @@ class StartRouteActivity : AppCompatActivity() {
                 mFusedLocationClient!!.lastLocation.addOnCompleteListener { task ->
                     val location: Location? = task.result
                     if (location == null) {
-                        Toast.makeText(this@StartRouteActivity, "Coordenadas não encontradas", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@StartRouteActivity, getString(R.string.coordinates_not_found), Toast.LENGTH_SHORT).show()
                     } else {
-                        this.currentLatitude = location.latitude
-                        this.currentLongitude = location.longitude
+                        startRoute(location.latitude, location.longitude)
                     }
                 }
             } else {
-                Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.turn_on_gps), Toast.LENGTH_LONG).show()
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                 startActivity(intent)
             }

@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.mmetzner.vendor.R
-import br.com.mmetzner.vendor.model.Client
 import br.com.mmetzner.vendor.model.Product
-import kotlinx.android.synthetic.main.activity_orders_item.view.*
 import kotlinx.android.synthetic.main.activity_select_product_item.view.*
 
-class StartRouteAdapter(private var mItems: List<Product>) : RecyclerView.Adapter<StartRouteViewHolder>() {
+class StartRouteAdapter(private var mItems: List<Product?>) : RecyclerView.Adapter<StartRouteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StartRouteViewHolder {
         return StartRouteViewHolder(
@@ -23,8 +21,8 @@ class StartRouteAdapter(private var mItems: List<Product>) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: StartRouteViewHolder, position: Int) {
         val item = mItems[position]
 
-        holder.itemView.tvDescription.text = item.description
-        holder.itemView.etQuantity.setText(item.quantity.toString())
+        holder.itemView.tvDescription.text = item?.description
+        holder.itemView.etQuantity.setText(item?.quantity.toString())
         holder.itemView.etQuantity.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
@@ -32,7 +30,7 @@ class StartRouteAdapter(private var mItems: List<Product>) : RecyclerView.Adapte
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(s.toString().isNotEmpty()) {
-                    mItems[position].quantity = s.toString().toInt()
+                    mItems[position]?.quantity = s.toString().toInt()
                 }
             }
         })
@@ -42,12 +40,12 @@ class StartRouteAdapter(private var mItems: List<Product>) : RecyclerView.Adapte
         return mItems.size
     }
 
-    fun updateItems(items: List<Product>) {
+    fun updateItems(items: List<Product?>) {
         this.mItems = items
         notifyDataSetChanged()
     }
 
-    fun getItems(): List<Product> {
+    fun getItems(): List<Product?> {
         return mItems
     }
 

@@ -42,4 +42,6 @@
     <string name="select_vehicle">Escolher Veículo</string>
     <string name="close_route">Encerrar Rota</string>
     <string name="close">Fechar R$: %1$s</string>
+    <string name="coordinates_not_found">Coordenadas não encontradas</string>
+    <string name="turn_on_gps">Habilite o GPS do aparelho</string>
 </resources>

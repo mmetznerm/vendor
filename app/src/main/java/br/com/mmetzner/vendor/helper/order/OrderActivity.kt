@@ -143,7 +143,8 @@ class OrderActivity : AppCompatActivity(),
 
         val intent = Intent(this, StartRouteActivity::class.java)
         intent.putExtra(Constants.TRUCK_ID, viewModel.mUser.value?.truckId)
-        intent.putExtra(Constants.SUGGESTED_PRODUCTS, Gson().toJson(sugestedQuantities))
+        intent.putExtra(Constants.PRODUCTS, Gson().toJson(viewModel.mProducts.value))
+        intent.putExtra(Constants.SUGGESTED_QUANTITIES, Gson().toJson(sugestedQuantities))
         startActivityForResult(intent, Constants.REQUEST_CODE_ROUTE_ACTIVITY)
     }
 

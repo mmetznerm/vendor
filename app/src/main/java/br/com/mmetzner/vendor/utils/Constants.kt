@@ -9,8 +9,9 @@ object Constants {
     const val PRODUCTS = "products"
     const val TRUCK_SELECTED = "truck_selected"
     const val TRUCK_ID = "truck_id"
-    const val SUGGESTED_PRODUCTS = "suggested_products"
+    const val SUGGESTED_QUANTITIES = "suggested_quantities"
 
     const val REQUEST_CODE_DETAIL_ACTIVITY = 344
     const val REQUEST_CODE_ROUTE_ACTIVITY = 188
+    const val REQUEST_CODE_PERMISSIONS = 345
 }

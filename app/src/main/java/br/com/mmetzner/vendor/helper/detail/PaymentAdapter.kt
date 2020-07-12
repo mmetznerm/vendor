@@ -11,7 +11,7 @@ import br.com.mmetzner.vendor.model.Payment
 
 class PaymentAdapter(context: Context?) : BaseAdapter() {
 
-    private var items: Array<Payment> = arrayOf()
+    private var items: List<Payment?> = listOf()
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
 
@@ -30,11 +30,11 @@ class PaymentAdapter(context: Context?) : BaseAdapter() {
             vh = view.tag as ItemRowHolder
         }
 
-        vh.label.text = items[position].description
+        vh.label.text = items[position]?.description
         return view
     }
 
-    override fun getItem(position: Int): Payment {
+    override fun getItem(position: Int): Payment? {
         return items[position]
     }
 
@@ -46,11 +46,11 @@ class PaymentAdapter(context: Context?) : BaseAdapter() {
         return items.size
     }
 
-    fun getItems(): Array<Payment> {
+    fun getItems(): List<Payment?> {
         return items
     }
 
-    fun addAll(items: Array<Payment>) {
+    fun addAll(items: List<Payment?>) {
         this.items = items
         notifyDataSetChanged()
     }

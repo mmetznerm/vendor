@@ -1,4 +1,4 @@
-package br.com.mmetzner.vendor.helper
+package br.com.mmetzner.vendor.helper.order
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

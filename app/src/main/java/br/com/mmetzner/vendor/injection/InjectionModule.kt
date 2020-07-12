@@ -6,6 +6,7 @@ import br.com.mmetzner.vendor.admin.newclient.NewClientViewModel
 import br.com.mmetzner.vendor.admin.neworder.product.SelectProductViewModel
 import br.com.mmetzner.vendor.admin.newpayment.NewPaymentViewModel
 import br.com.mmetzner.vendor.admin.newproduct.NewProductViewModel
+import br.com.mmetzner.vendor.helper.detail.DetailViewModel
 import br.com.mmetzner.vendor.helper.order.OrderViewModel
 import br.com.mmetzner.vendor.login.LoginViewModel
 import org.koin.android.viewmodel.ext.koin.viewModel
@@ -20,4 +21,5 @@ val injectionModule = module {
     viewModel { SelectClientViewModel() }
     viewModel { SelectProductViewModel() }
     viewModel { OrderViewModel() }
+    viewModel { DetailViewModel() }
 }

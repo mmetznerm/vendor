@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.mmetzner.vendor.utils.CustomDate
 import br.com.mmetzner.vendor.R
 import br.com.mmetzner.vendor.admin.newclient.NewClientActivity
-import br.com.mmetzner.vendor.helper.OrderAdapter
 import br.com.mmetzner.vendor.helper.detail.DetailActivity
 import br.com.mmetzner.vendor.helper.route.StartRouteActivity
 import br.com.mmetzner.vendor.model.*
@@ -165,9 +164,8 @@ class OrderActivity : AppCompatActivity(),
     }
 
     override fun onItemClicked(position: Int, order: Order?) {
-        val gson = Gson()
         val intent = Intent(this, DetailActivity::class.java)
-        intent.putExtra("order", gson.toJson(order))
+        intent.putExtra(Constants.ORDER, Gson().toJson(order))
         startActivityForResult(intent, Constants.REQUEST_CODE_DETAIL_ACTIVITY)
     }
 

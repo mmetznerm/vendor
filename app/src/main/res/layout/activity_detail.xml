@@ -14,7 +14,7 @@
         android:layout_marginLeft="16dp"
         android:text="@string/payment_type"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/spinner3"
+        app:layout_constraintBottom_toTopOf="@+id/spPayments"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -92,7 +92,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Spinner
-        android:id="@+id/spinner3"
+        android:id="@+id/spPayments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

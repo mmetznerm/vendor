@@ -4,6 +4,7 @@ object Constants {
     const val USER = "user"
     const val USERS = "users"
     const val CLIENT = "client"
+    const val ORDER = "order"
     const val TRUCKS = "trucks"
     const val PRODUCTS = "products"
     const val TRUCK_SELECTED = "truck_selected"

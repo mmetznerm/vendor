@@ -1,6 +1,7 @@
 package br.com.mmetzner.vendor.repository
 
 import android.util.Log
+import android.widget.Toast
 import br.com.mmetzner.vendor.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -11,10 +12,16 @@ object FirebaseData {
     private const val DATABASE_PAYMENTS = "payments"
     private const val DATABASE_CLIENTS = "clients"
     private const val DATABASE_ORDERS = "orders"
+    private const val DATABASE_CHARGES = "charges"
 
     private var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    fun getUserByEmailAndPassword(email: String, password: String, successCallBack: (users: User?) -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun getUserByEmailAndPassword(
+        email: String,
+        password: String,
+        successCallBack: (users: User?) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_USERS)
             .whereEqualTo("email", email)
             .whereEqualTo("password", password)
@@ -24,24 +31,17 @@ object FirebaseData {
                 successCallBack.invoke(user)
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun getAllUsers(successCallBack: (users: List<User?>) -> Unit, errorCallBack: (error: String) -> Unit) {
-        db.collection(DATABASE_USERS)
-            .get()
-            .addOnSuccessListener { result ->
-                successCallBack.invoke(result.documents.map { it.toObject(User::class.java) })
-            }
-            .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
-                Log.d("Vendor", "Error", exception)
-            }
-    }
-
-    fun getEnableTrucks(successCallBack: (trucks: List<Truck?>) -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun getEnableTrucks(
+        successCallBack: (trucks: List<Truck?>) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_TRUCKS)
             .whereEqualTo("routeStarted", true)
             .get()
@@ -56,12 +56,17 @@ object FirebaseData {
                 successCallBack.invoke(trucks)
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun getAllProducts(successCallBack: (products: List<Product?>) -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun getAllProducts(
+        successCallBack: (products: List<Product?>) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_PRODUCTS)
             .get()
             .addOnSuccessListener { result ->
@@ -75,12 +80,17 @@ object FirebaseData {
                 successCallBack.invoke(products)
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun getAllClients(successCallBack: (users: List<Client?>) -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun getAllClients(
+        successCallBack: (users: List<Client?>) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_CLIENTS)
             .get()
             .addOnSuccessListener { result ->
@@ -94,12 +104,18 @@ object FirebaseData {
                 successCallBack.invoke(clients)
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun saveClient(client: ClientRequest, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun saveClient(
+        client: ClientRequest,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_CLIENTS)
             .document()
             .set(client)
@@ -107,12 +123,37 @@ object FirebaseData {
                 successCallBack.invoke()
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun saveProduct(product: ProductRequest, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun saveCharge(
+        charge: ChargeRequest,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
+        db.collection(DATABASE_CHARGES)
+            .document()
+            .set(charge)
+            .addOnSuccessListener {
+                successCallBack.invoke()
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun saveProduct(
+        product: ProductRequest,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_PRODUCTS)
             .document()
             .set(product)
@@ -120,12 +161,18 @@ object FirebaseData {
                 successCallBack.invoke()
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun savePayment(paymentRequest: PaymentRequest, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun savePayment(
+        paymentRequest: PaymentRequest,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_PAYMENTS)
             .document()
             .set(paymentRequest)
@@ -133,12 +180,18 @@ object FirebaseData {
                 successCallBack.invoke()
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun saveOrder(orderRequest: OrderRequest, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun saveOrder(
+        orderRequest: OrderRequest,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_ORDERS)
             .document()
             .set(orderRequest)
@@ -146,12 +199,19 @@ object FirebaseData {
                 successCallBack.invoke()
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun updateTruck(truckId: String, updates: HashMap<String, Any>, successCallBack: () -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun updateTruck(
+        truckId: String,
+        updates: HashMap<String, Any>,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_TRUCKS)
             .document(truckId)
             .update(updates)
@@ -159,12 +219,39 @@ object FirebaseData {
                 successCallBack.invoke()
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun getOrderByDay(date: String, truckId: String, successCallBack: (orders: List<Order?>) -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun updateOrder(
+        orderId: String,
+        updates: HashMap<String, Any>,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
+        db.collection(DATABASE_ORDERS)
+            .document(orderId)
+            .update(updates)
+            .addOnSuccessListener {
+                successCallBack.invoke()
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun getOrderByDay(
+        date: String,
+        truckId: String,
+        successCallBack: (orders: List<Order?>) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_ORDERS)
             .whereEqualTo("date", date)
             .whereEqualTo("truckId", truckId)
@@ -180,12 +267,18 @@ object FirebaseData {
                 successCallBack.invoke(orders)
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
     }
 
-    fun getTruckById(truckId: String, successCallBack: (truck: Truck?) -> Unit, errorCallBack: (error: String) -> Unit) {
+    fun getTruckById(
+        truckId: String,
+        successCallBack: (truck: Truck?) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
         db.collection(DATABASE_TRUCKS)
             .document(truckId)
             .get()
@@ -200,8 +293,84 @@ object FirebaseData {
                 }
             }
             .addOnFailureListener { exception ->
-                errorCallBack.invoke(exception.localizedMessage ?: exception.message ?: "Generic Error")
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
                 Log.d("Vendor", "Error", exception)
             }
+    }
+
+    fun getCharges(
+        clientId: String,
+        successCallBack: (charges: List<Charge?>) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
+        db.collection(DATABASE_CHARGES)
+            .whereEqualTo("clientId", clientId)
+            .whereEqualTo("finalized", false)
+            .get()
+            .addOnSuccessListener { result ->
+                val charges = mutableListOf<Charge?>()
+                result.documents.forEach {
+                    val charge = it.toObject(Charge::class.java)
+                    charge?.id = it.id
+                    charges.add(charge)
+                }
+
+                successCallBack.invoke(charges)
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun getPayments(
+        successCallBack: (payment: List<Payment?>) -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
+        db.collection(DATABASE_PAYMENTS)
+            .get()
+            .addOnSuccessListener { result ->
+                val payments = mutableListOf<Payment?>()
+                result.documents.forEach {
+                    val payment = it.toObject(Payment::class.java)
+                    payment?.id = it.id
+                    payments.add(payment)
+                }
+
+                successCallBack.invoke(payments)
+            }
+            .addOnFailureListener { exception ->
+                errorCallBack.invoke(
+                    exception.localizedMessage ?: exception.message ?: "Generic Error"
+                )
+                Log.d("Vendor", "Error", exception)
+            }
+    }
+
+    fun updateCharges(
+        charges: List<Charge?>,
+        successCallBack: () -> Unit,
+        errorCallBack: (error: String) -> Unit
+    ) {
+        db.runBatch { batch ->
+            charges.forEach {
+                val update =
+                    db
+                        .collection(DATABASE_CHARGES)
+                        .document(it?.id!!)
+                batch.update(update, "finalized", true)
+            }
+        }.addOnCompleteListener {
+            successCallBack.invoke()
+        }.addOnFailureListener { exception ->
+            errorCallBack.invoke(
+                exception.localizedMessage ?: exception.message ?: "Generic Error"
+            )
+            Log.d("Vendor", "Error", exception)
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import br.com.mmetzner.vendor.R
+import br.com.mmetzner.vendor.utils.Constants.REQUEST_CODE_CLIENT_ACTIVITY
 import br.com.mmetzner.vendor.utils.CustomDialog.loadingDialog
 import br.com.mmetzner.vendor.utils.CustomDialog.showError
 import kotlinx.android.synthetic.main.activity_new_client.*
@@ -33,6 +34,7 @@ class NewClientActivity : AppCompatActivity() {
             showError(this, it)
         })
         viewModel.finishApp.observe(this, Observer {
+            setResult(REQUEST_CODE_CLIENT_ACTIVITY)
             finish()
         })
     }

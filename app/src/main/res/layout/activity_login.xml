@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:lines="1"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:imeOptions="actionDone"
             android:text="141512"
             />

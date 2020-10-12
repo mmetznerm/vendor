@@ -2,15 +2,19 @@ package br.com.mmetzner.vendor.admin.neworder.client
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.mmetzner.vendor.R
+import br.com.mmetzner.vendor.admin.newclient.NewClientActivity
 import br.com.mmetzner.vendor.admin.neworder.product.SelectProductActivity
 import br.com.mmetzner.vendor.model.Client
 import br.com.mmetzner.vendor.model.Product
 import br.com.mmetzner.vendor.model.Truck
 import br.com.mmetzner.vendor.utils.Constants
+import br.com.mmetzner.vendor.utils.Constants.REQUEST_CODE_CLIENT_ACTIVITY
 import br.com.mmetzner.vendor.utils.CustomDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -33,6 +37,10 @@ class SelectClientActivity : AppCompatActivity(), SelectClientAdapter.OnClickLis
         configureList()
         configureObservers()
 
+        getClients()
+    }
+
+    private fun getClients() {
         viewModel.getClients()
     }
 
@@ -52,6 +60,33 @@ class SelectClientActivity : AppCompatActivity(), SelectClientAdapter.OnClickLis
         val layoutManager = LinearLayoutManager(this)
         rvClients.layoutManager = layoutManager
         rvClients.adapter = mAdapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_new_order, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        return when (item?.itemId) {
+            R.id.calendar -> {
+                openNewClientActivity()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == REQUEST_CODE_CLIENT_ACTIVITY) {
+            getClients()
+        }
+    }
+
+    private fun openNewClientActivity() {
+        startActivityForResult(Intent(this, NewClientActivity::class.java), REQUEST_CODE_CLIENT_ACTIVITY)
     }
 
     override fun onItemClicked(position: Int, client: Client?) {

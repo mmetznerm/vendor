@@ -6,8 +6,8 @@ class Client(
     val address: String? = null,
     val cpfCnpj: String? = null,
     val phone: String? = null,
-    val latitude: Double = 0.0,
-    val longitude: Double = 0.0,
+    val latitude: Double? = null,
+    val longitude: Double? = null,
     val city: String? = null,
     val charges: List<Charge>? = null
 )

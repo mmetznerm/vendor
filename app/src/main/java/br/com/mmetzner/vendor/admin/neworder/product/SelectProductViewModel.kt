@@ -49,7 +49,7 @@ class SelectProductViewModel : ViewModel() {
 
         mTrucks.value?.forEach {
             val distance = calculateDistance(
-                LatLng(client.latitude, client.longitude),
+                LatLng(client.latitude ?: 0.0, client.longitude ?: 0.0),
                 LatLng(it?.latitude ?: 0.0, it?.longitude ?: 0.0)
             )
             if(truckNearAddress == null) {

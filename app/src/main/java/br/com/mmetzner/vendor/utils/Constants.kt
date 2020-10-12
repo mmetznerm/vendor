@@ -13,5 +13,6 @@ object Constants {
 
     const val REQUEST_CODE_DETAIL_ACTIVITY = 344
     const val REQUEST_CODE_ROUTE_ACTIVITY = 188
+    const val REQUEST_CODE_CLIENT_ACTIVITY = 100
     const val REQUEST_CODE_PERMISSIONS = 345
 }
